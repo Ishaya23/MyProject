@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { auth } from "../settings/firebase.setting";
 import {createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { useContext } from "react";
+import { AppContext } from "../settings/globalVariables";
 
 const validationRules = yup.object({
   email:yup.string().required('you must fill this field').min(5).max(36),
@@ -174,4 +175,3 @@ const style = StyleSheet.create({
 })
 
 //validation:a set rules for controlling form inputs
-//height 

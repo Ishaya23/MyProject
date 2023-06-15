@@ -1,110 +1,99 @@
-import React, {useState} from "react";
-import { View,TouchableOpacity,Text,StyleSheet,Alert,Button,TextInput} from "react-native";
+import { useState,useEffect,useCallback,useContext } from "react";
+import { AppContext } from "../settings/globalVariables";
+import { View,TouchableOpacity,Text,StyleSheet,Alert} from "react-native";
 import { SafeArea } from "../components/SafeArea";
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { Pacifico_400Regular } from "@expo-google-fonts/pacifico";
-import { useState,useEffect,useCallback } from "react";
 import { TextInput,Button } from 'react-native-paper';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import { auth } from "../settings/firebase.setting";
-import { Formik } from "formik";
-import * as yup from 'yup'; 
-
+import { createUserWithEmailAndPassword,onAuthStateChanged } from 'firebase/auth';
 
 const validationRules = yup.object({
   email:yup.string().required('you must fill this field').min(5).max(36),
- 
-  
 });
-// // testing to see
-//  const [email, setEmail] = useState('')
-//  const [password, setPassword] = useState('')
-
-//  const signIn = () => {
-//   signInWithEmailAndPassword(auth, email, password);
-//  }
 
 export function ForgotPassword ({navigation}) {
-    const [appIsReady, setAppIsReady] = useState(false);
-    const [text, setText] = useState("");
-    const [number, setNumber] = useState("");
+  const {setUid} = useContext(AppContext);
+  const [appIsReady, setAppIsReady] = useState(false);
 
-    useEffect(() => {
-
-        async function prepare() {
-          try {
-            await Font.loadAsync({Pacifico_400Regular});
-            await new Promise(resolve => setTimeout(resolve, 2000));
-          } catch (e) {
-            console.warn(e);
-          } finally {
-            setAppIsReady(true);
-          }
-        }
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({Pacifico_400Regular});
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+  
+    prepare();
+  }, []);
     
-        prepare();
-      }, []);
-    
-      const onLayoutRootView = useCallback(async () => {
-        if (appIsReady) {
-          await SplashScreen.hideAsync();
-        }
-      }, [appIsReady]);
-    
-      if (!appIsReady) {
-        return null;
-      };
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
 
-      // const LoginScreen = () => {
-      //   const[email, setEmail] = useState('')
-      //   const [password, setPassword] = useState('')
-      // }
+  if (!appIsReady) {
+    return null;
+  }
 
-      // const handleLogin = () => {
-      //   auth.signInWithEmailAndPassword(email, password)
-      //   .then(userCredentials => {
-      //   const user = userCredentials.user;
-      //   console.log(user.email);
-      //   });  
-      // }
+return(
+  <SafeArea>
+    <View style={style.heading}>
+      <Text style={style.title}>Charity App</Text>
+      <Text style={style.title2}>Reset Your Password</Text>
       
-    
-    return(
-        <SafeArea>
-            <View style={style.heding}>
-                <Text style={style.title}>Charity App</Text>
-                <Text style={style.title2}>Reset password</Text>
-
-                  <TextInput
-                      style={style.input}
-                      label="Email"
-                      mode="outlined"
-                      value={text}
-                      onChangeText={text => setText(text)}
-                     />
-
-                    <View style={style.button}>
-                      <Button 
-                      mode="contained" 
-                      onPress={handleSubmit}>
-                      Login
-                      </Button>
-                    </View>
-                  
-                  <View style={style.account}>
-                    <Text >Remember your password? </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                      <Text style={style.sign}>Sign up</Text>
-                    </TouchableOpacity>
-                  </View>
+      <Formik
+        initialValues={{ email: '' }}
+        onSubmit={(values,action) => {
+          //code for forgot password here
+        }}
+        validationSchema={validationRules}
+      >
+          {({ handleChange, handleBlur, handleSubmit, values,errors,touched }) => (
+            <View>
+              <View>
+                <TextInput
+                  mode="outlined"
+                  label='email'
+                  style={style.input}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                />
+                {touched.email && errors.email 
+                ? <Text style={{color:'red'}}>{errors.email}</Text> 
+                : null}
               </View>
-          </SafeArea>
-    )
+
+              <Button
+              mode="contained"
+              onPress={handleSubmit}
+              contentStyle={{paddingVertical:6}}
+              style={{marginVertical:12}}>Reset Password</Button>
+            </View>
+          )}
+        </Formik>
+        <View style={style.account}>
+            <Text >Rembered your password? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={style.sign}>Go to Sign</Text>
+            </TouchableOpacity>
+        </View>
+      </View>
+    </SafeArea>
+  )
 }
 
 const style = StyleSheet.create({
-    heding:{ 
+    heading:{ 
         flex:1,
         alignItems:'center',
         justifyContent:'center',
@@ -119,18 +108,15 @@ const style = StyleSheet.create({
     },
     input:{
         marginTop:15,
-        width:300
-    },
-    button:{
-      marginTop:20,
-      width:300,
-      height:70
+        width:300,
     },
     account:{
       flexDirection:'row'
     },
     sign:{
-      
       color:'blue'
     },
-});
+})
+
+//validation:a set rules for controlling form inputs
+//height 

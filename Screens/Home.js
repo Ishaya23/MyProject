@@ -17,7 +17,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons  from 'react-native-vector-icons/Ionicons';
 import { Donate } from "./Donate";
 import { About } from "./About";
-import { Theme } from "../utils/theme";  
+import { Theme } from "../utils/theme"; 
+
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +54,14 @@ function Home ({navigation}) {
     <SafeArea>
       <View style={styles.header} >
         <Text style={styles.brandName}>CharityApp</Text>
-        <FontAwesomeIcon icon={faUser} color="#5C469C" size={30}/>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <FontAwesomeIcon 
+        icon={faUser} 
+        color="#5C469C" 
+        size={30}/>
+      </TouchableOpacity>
+        
+        
       </View>
 
       <View style={styles.body}>
