@@ -10,19 +10,20 @@ import { ForgotPassword } from "./ForgotPassword";
 import { CreateProfile } from "./CreateProfile";
 import { Profile } from "./Profile";
 import { UpdateProfile } from "./UpdateProfile";
-
+import { FundRaiser } from "./FundRaiser";
 
 
 const Stack = createStackNavigator();
 
 export function StackNavigation () {
     return (
-        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown:false}}>
+        <Stack.Navigator initialRouteName='My Home' screenOptions={{headerShown:false}}>
             <Stack.Screen name='My Home' component={MyHome} />
             <Stack.Screen name='Login' component={Login} options={{headerShown:true}} />
             <Stack.Screen name='About' component={About} />
             <Stack.Screen name='Donate' component={Donate} />
             <Stack.Screen name="Fund Raisers" component={FundRaisers}/>
+            <Stack.Screen name="Fund Raiser" component={FundRaiser} options={{headerShown:true}}/>
             <Stack.Screen name="Create" component={Create}/>
             <Stack.Screen name='reset Password' component={ForgotPassword}/>
             <Stack.Screen  name="Profile" component={Profile} options={{headerShown:true}}/> 
