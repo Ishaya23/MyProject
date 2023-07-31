@@ -5,7 +5,7 @@ import { SafeArea } from "../components/SafeArea";
 import { db } from '../settings/firebase.setting';
 import { addDoc,collection } from "firebase/firestore";
 import  { Paystack }  from 'react-native-paystack-webview';
-import {public_key} from "../settings/payStack.setting"
+
 
 export function Pay ({navigation,route}) {
     const {uid,email} = useContext(AppContext);

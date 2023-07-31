@@ -1,10 +1,12 @@
-import { useState,useEffect,useCallback,useContext } from "react";
+import { useState,useContext } from "react";
 import { AppContext } from "../settings/globalVariables";
 import { View,ActivityIndicator,Text,StyleSheet,Alert} from "react-native";
 import { SafeArea } from "../components/SafeArea";
 import { TextInput,Button } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { db } from '../settings/firebase.setting';
+import { setDoc,doc } from "firebase/firestore";
 
 const validationRules = yup.object({
     fName:yup.string().required('required filed'),
@@ -17,7 +19,6 @@ const validationRules = yup.object({
 
 export function CreateProfile ({navigation}) {
   const {uid} = useContext(AppContext);
-
   const [eventActivityIndicator,setEventActivityIndicator] = useState(false);
 
   return (

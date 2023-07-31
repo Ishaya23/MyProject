@@ -90,7 +90,7 @@ function Home ({navigation}) {
           <TouchableOpacity style={styles.actionBox} 
           onPress={() => navigation.navigate('Fund Raisers')}>
             <FontAwesomeIcon 
-            icon={faUsersViewfinder} 
+            icon={faUsersViewfinder}  
             color={Theme.colors.lime100}
             size={Theme.sizes[5]}/>
             <Text style={styles.optionText}>Raisers</Text>

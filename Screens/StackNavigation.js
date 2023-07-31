@@ -17,11 +17,11 @@ const Stack = createStackNavigator();
 
 export function StackNavigation () {
     return (
-        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown:false}}>
+        <Stack.Navigator initialRouteName='My Home' screenOptions={{headerShown:false}}>
             <Stack.Screen name='My Home' component={MyHome} />
             <Stack.Screen name='Login' component={Login} options={{headerShown:true}} />
             <Stack.Screen name='About' component={About} />
-            <Stack.Screen name="Fund Raisers" component={FundRaisers}/>
+            <Stack.Screen name="Fund Raisers" component={FundRaisers} options={{headerShown:true}}/>
             <Stack.Screen name="Fund Raiser" component={FundRaiser} options={{headerShown:true}}/>
             <Stack.Screen name="Pay" component={Pay} options={{headerShown:true}}/>
             <Stack.Screen name="History" component={History} options={{headerShown:true}}/>
